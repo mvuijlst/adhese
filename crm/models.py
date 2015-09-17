@@ -27,7 +27,8 @@ class Contacttype(models.Model):
 class Contact(models.Model):
 	date=models.DateField('contact date',null=True,blank=True)
 	typename=models.ForeignKey(Contacttype,null=True,blank=True)
-	persons=models.ManyToManyField(Person,null=True,blank=True)
+	companies=models.ManyToManyField(Company)
+	persons=models.ManyToManyField(Person)
 	memo=models.TextField(null=True,blank=True)
 	nextdate=models.DateTimeField('next date',null=True,blank=True)
 	
