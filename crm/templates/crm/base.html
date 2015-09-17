@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+{% load app_filters %} 
+
+<html><head>
+	<script type="text/javascript">
+	  WebFontConfig = {
+		google: { families: [ 'Roboto:400,400italic,500:latin', 'Roboto+Slab:400,700:latin' ] }
+	  };
+	  (function() {
+		var wf = document.createElement('script');
+		wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+		  '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+		wf.type = 'text/javascript';
+		wf.async = 'true';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(wf, s);
+	  })();
+	</script>
+	<title>{% block title %}Welcome{% endblock %} | Adhese CRM</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'crm/normalize.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'crm/styles.css' %}" />
+	<meta name="format-detection" content="telephone=no"/>
+</head>
+<body>
+	
+	<div id="header">
+		<h1><a href="{% url 'index' %}">Adhese CRM</a></h1>
+		<p id="utility">
+			<a href="{% url 'index' %}">home</a>
+			{% if user.is_authenticated %}
+				{% if request.user|has_group:"admin" %}
+					| <a href="/admin">admin</a>
+				{% endif %}
+				| <a href="">logout</a>
+			{% else %}
+				| <a href="">login</a>
+			{% endif %}
+		</p>
+	</div>
+	
+	<div id="main">
+		{% block main %}
+			<p>Welcome.</p>
+		{% endblock %}
+	</div>
+	
+	<div id="footer">
+		<p>&copy; Adhese, yada yada</p>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,126 @@
+.wf-loading * {
+    visibility: hidden;
+}
+
+
+p, li, li, th, td, dd, div {
+	font-family: 'Roboto', sans-serif;
+	color: #333;
+}
+
+h1, h2, h3, h4, dt {
+    font-family: 'Roboto Slab', serif;
+	color: #222
+ }
+
+body {
+	line-height: 1.5em;
+	background-color: #fffffa;
+}
+
+/*
+#main {
+	max-width: 960px;
+}
+*/
+
+a {
+	color: #000;
+	text-decoration: none;
+	border-bottom: 1px dotted #666;
+	transition: background-color .3s;
+	-webkit-transition: background-color .3s;
+	-o-transition: background-color .3s;
+	-moz-transition: background-color .3s;
+}
+
+a:hover {
+	border: none;
+	background-color: #ff0;
+}
+
+#header {
+	position: fixed;
+	background-color: #fefefe;
+	top: 0;
+	width: 100%;
+	height: 50px;
+	box-shadow: 0px 2px 3px rgba(0,0,0,0.2);
+}
+
+#header h1{
+	font-size: 24px;
+	margin: 10px;
+	float: left;
+}
+
+#utility {
+	float: right;
+	margin: 10px 20px 10px 0;
+}
+
+#main {
+	margin: 70px 10px 40px 10px;
+}
+
+#footer {
+	position: fixed;
+	background-color: #fefefe;
+	bottom: 0;
+	width: 100%;
+	height: 25px;
+	box-shadow: 0px -1px 2px rgba(0,0,0,0.1);
+}
+
+#footer p {
+	font-size: 10px;
+	text-align: center;
+	margin: 0;
+}
+
+table.stripe {
+	border-collapse: collapse;
+	font-size: 0.9em;
+}
+
+table.stripe, table.stripe td, table.stripe th {
+	border: 1px solid #bbb;
+}
+
+table.stripe td, table.stripe th {
+	padding: 2px 10px;
+}
+
+table.stripe th {
+	background-color: #ddd;
+	color: #333;
+}
+
+table.stripe tr.even {
+	background-color: #f3f3f3;
+}
+
+table.stripe tr.andere  {
+	font-style: italic;
+}
+
+table.topalign td, table.topalign th {
+	vertical-align: top;
+}
+
+table.select tr:hover td {
+	background-color: #6cf;
+	cursor: pointer;	
+	transition: background-color .3s, color .3s;
+	-webkit-transition: background-color .3s, color .3s;
+	-o-transition: background-color .3s, color .3s;
+	-moz-transition: background-color .3s, color .3s;
+}
+
+table.select tr a, table.select tr:hover a {
+	text-decoration: none;
+	background-color: transparent;
+	border: none;
+	display: block;
+}
+

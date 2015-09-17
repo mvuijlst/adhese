@@ -1,0 +1,27 @@
+{% extends 'crm/base.html' %}
+{% load humanize %}
+{% load app_filters %} 
+
+{% block title %}Event: {{ event.project }} {{ event.eventtype }} {{ event.datetime|date:"d/m/Y H:i" }} {% endblock %}
+
+{% block main %}
+<h1>{{ event.project }} {{ event.eventtype }}</h1>
+
+<ul><li><strong>Date/time</strong>: {{ event.datetime|date:"d/m/Y H:i" }} ({{ event.datetime|naturaltime }})</li>
+	<li><strong>Location</strong>: {{ event.location }}</li>
+</ul>
+
+{% for person in event.persons_set.all %}
+	{{ person.firstname }} {{ person.lastname }}<br/>
+{% endfor %}
+
+{% for company in event.companies_set.all %}
+	{{ company.name }}<br/>
+{% endfor %}
+
+<h2>Notities</h2>
+<p>{{ event.memo|linebreaks }}</p>
+
+
+{% endblock %}
+

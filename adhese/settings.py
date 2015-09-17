@@ -37,7 +37,9 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'autocomplete_light',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'crm',
 )
 
@@ -57,7 +59,7 @@ ROOT_URLCONF = 'adhese.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

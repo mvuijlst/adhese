@@ -86,6 +86,7 @@ class Event(models.Model):
 	companies=models.ManyToManyField(Company)
 	persons=models.ManyToManyField(Person)
 	memo=models.TextField(null=True,blank=True)
+	meetingnotes=models.CharField(max_length=200,null=True,blank=True)
 	nextevent=models.ForeignKey('self',null=True,blank=True)
 	
 	class Meta:

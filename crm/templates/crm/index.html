@@ -1,0 +1,70 @@
+{% extends 'crm/base.html' %}
+{% load humanize %}
+{% load app_filters %} 
+
+{% block title %}Home{% endblock %}
+
+{% block main %}
+<h1>Events</h1>
+
+<table>
+	<tr><th><h2>Upcoming</h2></th><th><h2>Recent</h2></th></tr>
+	<tr><td valign="top" style="padding-right: 1em">
+			{% if upcomingeventlist %}
+				<table class="stripe topalign select">
+					<tr><th>Date/time</th>
+						<th>Type</th>
+						<th>Project</th>
+					</tr>
+					{% for event in upcomingeventlist %}
+						<tr class="{% cycle 'odd' 'even' %}">
+							<td><a href="{% url 'event' event.id %}">{{ event.datetime|date:"d/m/Y H:i" }}</a></td>
+							<td><a href="{% url 'event' event.id %}">{{ event.eventtype }}</a></td>
+							<td><a href="{% url 'event' event.id %}">{{ event.project }}</a></td>
+						</tr>
+					{% endfor %}
+				</table>
+			{% else %}
+				<p>No events</p>
+			{% endif %}
+		</td>
+		<td valign="top">
+			{% if recenteventlist %}
+				<table class="stripe topalign select">
+					<tr><th>Date/time</th>
+						<th>Type</th>
+						<th>Project</th>
+					</tr>
+					{% for event in recenteventlist %}
+						<tr class="{% cycle 'odd' 'even' %}">
+							<td><a href="{% url 'event' event.id %}">{{ event.datetime|date:"d/m/Y H:i" }}</a></td>
+							<td><a href="{% url 'event' event.id %}">{{ event.eventtype }}</a></td>
+							<td><a href="{% url 'event' event.id %}">{{ event.project }}</a></td>
+						</tr>
+					{% endfor %}
+				</table>
+			{% else %}
+				<p>No events</p>
+			{% endif %}
+		</td>
+	</tr>
+</table>
+
+<h1>Projects</h1>
+
+{% if projectlist %}
+	<table class="stripe topalign select">
+		<tr><th>Project</th></tr>
+		{% for project in projectlist %}
+			<tr class="{% cycle 'odd' 'even' %}">
+				<td>{{ project.name }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+{% else %}
+	<p>No projects</p>
+{% endif %}
+
+
+{% endblock %}
+
