@@ -80,7 +80,7 @@ class Project(models.Model):
 
 class Event(models.Model):
 	datetime=models.DateTimeField('Date/time',null=True,blank=True)
-	eventtype=models.ForeignKey('Event type',Eventtype,null=True,blank=True)
+	eventtype=models.ForeignKey(Eventtype,null=True,blank=True)
 	location=models.ForeignKey(Location,null=True,blank=True)
 	project=models.ForeignKey(Project,null=True,blank=True)
 	companies=models.ManyToManyField(Company)
