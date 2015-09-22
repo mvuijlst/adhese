@@ -1,0 +1,52 @@
+{% extends 'crm/base.html' %}
+{% load humanize %}
+{% load thumbnail %}
+{% load app_filters %} 
+
+{% block title %}Person: {{ person.firstname }} {{ person.lastname }}{% endblock %}
+
+{% block main %}
+
+{% if person.photo %}
+	<a href="{{ person.photo.url }}" alt="{{ person.firstname }} {{ person.lastname }}">
+		{% thumbnail person.photo "300" as im %}
+			<img class="personphoto" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+		{% endthumbnail %}
+	</a>
+{% endif %}
+
+<h1>{{ person.firstname }} {{ person.lastname }}
+	<span class="edit">[<a href="/admin/crm/person/{{ person.id }}/">edit</a>]</span>
+</h1>
+
+{% if person.function or person.company %}<p>{% if person.function %} {{ person.function }}, {% endif %}{% if person.company %}<a href="{% url 'company' person.company.id %}">{{ person.company }}</a></p>{% endif %}{% endif %}
+
+{% if contacts.count > 0  %}		
+	<h3>Contact</h3>
+	<ul>{% for contact in contacts %}
+			<li>{{ contact.contacttype.template|formatcontact:contact.contactdata|safe }}
+				{% if contact.remark %}
+					({{ contact.remark }})
+				{% endif %}
+			</li>
+		{% endfor %}
+	</ul>
+{% endif %}
+
+{% if notes.count > 0  %}		
+	<h3>Notes</h3>
+	<table class="stripe topalign">
+		<tr><th>Date/time</th><th>Note</th></tr>
+		{% for note in notes %}
+			<tr class="{% cycle 'odd' 'even' %}">
+				<td><img src="/static/crm/{{ note.notetype.icon }}.png" alt="{{ note.notetype }}" align="absmiddle" />
+					{{ note.datetime|date:"d/m/Y H:i" }}</td>
+				<td>{{ note.note|linebreaksbr }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+{% endif %}
+
+
+{% endblock %}
+

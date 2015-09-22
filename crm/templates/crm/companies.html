@@ -1,0 +1,32 @@
+{% extends 'crm/base.html' %}
+{% load humanize %}
+{% load app_filters %} 
+
+{% block title %}Companies{% endblock %}
+
+{% block main %}
+{% if companylist %}
+	<h2>Companies</h2>
+	{% regroup companylist by initial as company_list %}
+	
+	<p>
+		{% for company in company_list %}
+			<a href="#{{ company.grouper }}">{{ company.grouper }}</a> {% if not forloop.last%}| {% endif %}
+		{% endfor %}
+	</p>
+	
+	<dl>
+		{% for company in company_list %}
+			<dt><a id="{{ company.grouper }}" />{{ company.grouper }}</dt>
+			{% for c in company.list %}
+				<dd>
+					<a href="{% url 'company' c.id %}">{{ c.name }}</a>
+				</dd>
+			{% endfor %}
+		{% endfor %}
+	</dl>
+{% else %}
+	<p>No people!</p>
+{% endif %}
+
+{% endblock %}

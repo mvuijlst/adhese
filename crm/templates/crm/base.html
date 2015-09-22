@@ -24,11 +24,15 @@
 	<meta name="format-detection" content="telephone=no"/>
 </head>
 <body>
-	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="http://maps.google.com/maps/api/js?sensor=false&amp;language=en"></script>
+	<script src="{% static 'crm/gmap3.min.js' %}"></script>
 	<div id="header">
 		<h1><a href="{% url 'index' %}">Adhese CRM</a></h1>
 		<p id="utility">
 			<a href="{% url 'index' %}">home</a>
+			| <a href="{% url 'companies' %}">companies</a>
+			| <a href="{% url 'people' %}">people</a>
 			{% if user.is_authenticated %}
 				{% if request.user|has_group:"admin" %}
 					| <a href="/admin">admin</a>

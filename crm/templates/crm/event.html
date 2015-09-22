@@ -1,27 +1,80 @@
 {% extends 'crm/base.html' %}
 {% load humanize %}
-{% load app_filters %} 
+{% load app_filters %}
+{% load staticfiles %}
 
-{% block title %}Event: {{ event.project }} {{ event.eventtype }} {{ event.datetime|date:"d/m/Y H:i" }} {% endblock %}
+{% block title %}Event: {% if event.project %}{{ event.project }} {% endif %}{{ event.eventtype }} {{ event.datetime|date:"d/m/Y H:i" }} {% endblock %}
 
 {% block main %}
-<h1>{{ event.project }} {{ event.eventtype }}</h1>
+<h1>
+	{% if event.project %}<a href="{% url 'project' event.project.id %}">{{ event.project }}</a>{% endif %} 
+	{% if event.project %}
+		{{ event.eventtype }}
+	{% else %}
+		{{ event.eventtype|capfirst }}
+	{% endif %}
+	<span class="edit">[<a href="/admin/crm/event/{{ event.id }}/">edit</a>]</span>
+</h1>
 
 <ul><li><strong>Date/time</strong>: {{ event.datetime|date:"d/m/Y H:i" }} ({{ event.datetime|naturaltime }})</li>
-	<li><strong>Location</strong>: {{ event.location }}</li>
+	<li><strong>Subject</strong>: {{ event.subject }}</li>
+	{% if event.location %}
+		<li><strong>Location</strong>: {{ event.location }}
+			{% if event.location.address and event.location.name != 'Adhese' and event.datetime.date > now.date %}
+				<img src="{% static 'crm/map.png' %}" onclick="$('#my_map').toggle();" style="cursor: pointer;" />
+				<div id="my_map" />
+				<script>
+					$("#my_map").width("500px").height("300px").gmap3({
+						map: {
+							options: {
+								maxZoom: 17,
+								mapTypeId: google.maps.MapTypeId.TERRAIN
+							}
+						},
+						marker:{
+							address: "{{ event.location.address|linetocomma }}"
+						}
+					},"autofit" );
+				</script>
+			{% endif %}
+		</li>
+	{% endif %}
 </ul>
 
-{% for person in event.persons_set.all %}
-	{{ person.firstname }} {{ person.lastname }}<br/>
-{% endfor %}
+{% if personlist %}
+	<h2>Present</h2>
 
-{% for company in event.companies_set.all %}
-	{{ company.name }}<br/>
-{% endfor %}
+	{% regroup personlist by companyname as companies %}
 
-<h2>Notities</h2>
-<p>{{ event.memo|linebreaks }}</p>
+	<ul>
+		{% for companyname in companies %}
+			<li>{% for item in companyname.list %}
+					{% ifchanged item.companyid %}
+						<a href="{% url 'company' item.companyid %}"><strong>{{ item.companyname }}</strong></a>:
+					{% endifchanged %}
+					<a href="{% url 'person' item.id %}">{{ item.firstname }} {{ item.lastname }}</a>{% if not forloop.last%}, {% endif %}
+				{% endfor %}
+			</li>
+		{% endfor %}
+	</ul>
+{% endif %}
 
+{% if notes.count > 0  or event.meetingnotes %}		
+	<h3>Notes</h3>
+	{% if event.meetingnotes %}
+		<p><a href="{{ event.meetingnotes }}">Meeting notes</a></p>
+	{% endif %}
+	<table class="stripe topalign">
+		<tr><th>Date/time</th><th>Note</th></tr>
+		{% for note in notes %}
+			<tr class="{% cycle 'odd' 'even' %}">
+				<td><img src="/static/crm/{{ note.notetype.icon }}.png" alt="{{ note.notetype }}" align="absmiddle" />
+					{{ note.datetime|date:"d/m/Y H:i" }}</td>
+				<td>{{ note.note|linebreaksbr }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+{% endif %}
 
 {% endblock %}
 

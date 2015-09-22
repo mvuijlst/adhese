@@ -18,11 +18,9 @@ body {
 	background-color: #fffffa;
 }
 
-/*
 #main {
 	max-width: 960px;
 }
-*/
 
 a {
 	color: #000;
@@ -124,3 +122,27 @@ table.select tr a, table.select tr:hover a {
 	display: block;
 }
 
+.edit {
+	font-size: 10px;
+	vertical-align: super;
+}
+
+.linkedin, .twitter, .facebook {
+	border: none;
+	padding-left: 18px;
+}
+.linkedin {
+	background: transparent url('in.png') no-repeat center left;
+}
+.twitter {
+	background: transparent url('twitter.png') no-repeat center left;
+}
+.facebook {
+	background: transparent url('fb.png') no-repeat center left;
+}
+
+.personphoto {
+	float: right;
+	padding: 5px;
+	border: 1px solid #ccc;
+}

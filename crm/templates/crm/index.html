@@ -5,7 +5,7 @@
 {% block title %}Home{% endblock %}
 
 {% block main %}
-<h1>Events</h1>
+<h2>Events</h2>
 
 <table>
 	<tr><th><h2>Upcoming</h2></th><th><h2>Recent</h2></th></tr>
@@ -50,21 +50,19 @@
 	</tr>
 </table>
 
-<h1>Projects</h1>
-
-{% if projectlist %}
+{% if projectlist.count > 0 %}
+	<h2>Projects</h2>
 	<table class="stripe topalign select">
 		<tr><th>Project</th></tr>
 		{% for project in projectlist %}
 			<tr class="{% cycle 'odd' 'even' %}">
-				<td>{{ project.name }}</td>
+				<td><a href="{% url 'project' project.id %}">{{ project.name }}</a></td>
 			</tr>
 		{% endfor %}
 	</table>
 {% else %}
 	<p>No projects</p>
 {% endif %}
-
 
 {% endblock %}
 

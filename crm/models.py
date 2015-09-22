@@ -49,6 +49,7 @@ class Person(models.Model):
 	lastname=models.CharField(max_length=150)
 	function=models.CharField(max_length=150,null=True,blank=True)
 	company=models.ForeignKey(Company,null=True,blank=True)
+	photo = models.ImageField(upload_to='photo',null=True,blank=True)
 	
 	class Meta:
 		ordering = ['lastname', 'firstname']
@@ -80,18 +81,17 @@ class Project(models.Model):
 
 class Event(models.Model):
 	datetime=models.DateTimeField('Date/time',null=True,blank=True)
+	subject=models.CharField(max_length=200,null=True,blank=True)
 	eventtype=models.ForeignKey(Eventtype,null=True,blank=True)
 	location=models.ForeignKey(Location,null=True,blank=True)
 	project=models.ForeignKey(Project,null=True,blank=True)
-	companies=models.ManyToManyField(Company)
 	persons=models.ManyToManyField(Person)
-	memo=models.TextField(null=True,blank=True)
 	meetingnotes=models.CharField(max_length=200,null=True,blank=True)
 	nextevent=models.ForeignKey('self',null=True,blank=True)
 	
 	class Meta:
 		ordering = ['datetime']
-		
+	
 	def __str__(self):
 		 return str(self.datetime) + " " + self.eventtype.name
 
@@ -107,8 +107,19 @@ class Contacttype(models.Model):
 		verbose_name = 'Means of contact'
 		verbose_name_plural = 'Means of contact'
 
+class Notetype(models.Model):
+	name = models.CharField(max_length=50)
+	icon = models.CharField(max_length=50)
+	
+	def __str__(self):
+		return self.name
+	
+	class Meta:
+		ordering = ['name']
+		
 class Contact(models.Model):
-	person=models.ForeignKey(Person)
+	person=models.ForeignKey(Person,null=True,blank=True)
+	company=models.ForeignKey(Company,null=True,blank=True)
 	contacttype=models.ForeignKey(Contacttype)
 	contactdata=models.CharField(max_length=200)
 	remark=models.CharField(max_length=150,null=True,blank=True)
@@ -119,3 +130,20 @@ class Contact(models.Model):
 		
 	def __str__(self):
 		return self.contacttype.name + " " + self.contactdata
+
+class Note(models.Model):
+	datetime=models.DateTimeField('Date/time', auto_now_add=True)
+	person=models.ForeignKey(Person, null=True, blank=True)
+	company=models.ForeignKey(Company, null=True, blank=True)
+	event=models.ForeignKey(Event, null=True, blank=True)
+	project=models.ForeignKey(Project, null=True, blank=True)
+	note=models.TextField()
+	notetype=models.ForeignKey(Notetype, null=True, blank=True)
+	actiondate=models.DateField('Action by', null=True, blank=True)
+	actionperson=models.ForeignKey(Person, related_name='note_actionperson', null=True, blank=True)
+	
+	class Meta:
+		ordering = ['datetime']
+		
+	def __str__(self):
+		return str(self.datetime) + " " + self.note

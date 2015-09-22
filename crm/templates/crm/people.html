@@ -1,0 +1,34 @@
+{% extends 'crm/base.html' %}
+{% load humanize %}
+{% load app_filters %} 
+
+{% block title %}People{% endblock %}
+
+{% block main %}
+{% if personlist %}
+	<h2>People</h2>
+	{% regroup personlist by initial as person_list %}
+	
+	<p>
+		{% for person in person_list %}
+			<a href="#{{ person.grouper }}">{{ person.grouper }}</a> {% if not forloop.last%}| {% endif %}
+		{% endfor %}
+	</p>
+	
+	<dl>
+		{% for person in person_list %}
+			<dt><a id="{{ person.grouper }}" />{{ person.grouper }}</dt>
+			{% for p in person.list %}
+				<dd>
+					<a href="{% url 'person' p.id %}">{{ p.firstname }} {{ p.lastname }}</a>
+					{% if p.companyname %}({{ p.companyname }}){% endif %}
+				</dd>
+			{% endfor %}
+		{% endfor %}
+	</dl>
+{% else %}
+	<p>No people!</p>
+{% endif %}
+
+{% endblock %}
+

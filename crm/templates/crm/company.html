@@ -1,0 +1,48 @@
+{% extends 'crm/base.html' %}
+{% load humanize %}
+{% load app_filters %} 
+
+{% block title %}Company: {{ company.name }}{% endblock %}
+
+{% block main %}
+<h1>{{ company.name }}
+	<span class="edit">[<a href="/admin/crm/company/{{ company.id }}/">edit</a>]</span></h1>
+
+{% if contacts.count > 0  %}		
+	<h2>Contact</h2>
+	<ul>{% for contact in contacts %}
+			<li>{{ contact.contacttype.template|formatcontact:contact.contactdata|safe }}
+				{% if contact.remark %}
+					({{ contact.remark }})
+				{% endif %}
+			</li>
+		{% endfor %}
+	</ul>
+{% endif %}
+
+{% if personlist.count > 0  %}
+	<h2>People</h2>
+	<ul>{% for person in personlist %}
+			<li><a href="{% url 'person' person.id %}">{{ person.firstname }} {{ person.lastname }}</a>
+				{% if person.function %}({{ person.function }}){% endif %}
+			</li>
+		{% endfor %}
+	</ul>
+{% endif %}
+
+{% if notes.count > 0  %}		
+	<h3>Notes</h3>
+	<table class="stripe topalign">
+		<tr><th>Date/time</th><th>Note</th></tr>
+		{% for note in notes %}
+			<tr class="{% cycle 'odd' 'even' %}">
+				<td><img src="/static/crm/{{ note.notetype.icon }}.png" alt="{{ note.notetype }}" align="absmiddle" />
+					{{ note.datetime|date:"d/m/Y H:i" }}</td>
+				<td>{{ note.note|linebreaksbr }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+{% endif %}
+
+{% endblock %}
+
