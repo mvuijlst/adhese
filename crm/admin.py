@@ -102,7 +102,6 @@ admin.site.register(Project, ProjectAdmin)
 class CompanyForm(autocomplete_light.ModelForm):
 	class Meta:
 		model=Company
-		autocomplete_fields=('parentcompany')
 		exclude=['']
 		
 class CompanyAdmin(admin.ModelAdmin):
