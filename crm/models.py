@@ -34,6 +34,7 @@ class Company(models.Model):
 	name=models.CharField(max_length=150)
 	parentcompany=models.ForeignKey('self',null=True,blank=True)
 	address=models.TextField(null=True,blank=True)
+	logo=models.ImageField(upload_to='logo',null=True,blank=True)
 	typename=models.ForeignKey(Companytype,null=True,blank=True)
 	relation=models.ForeignKey(Relation,null=True,blank=True)
 	
@@ -146,4 +147,4 @@ class Note(models.Model):
 		ordering = ['datetime']
 		
 	def __str__(self):
-		return str(self.datetime) + " " + self.note
+		return self.notetype.name+ " " + self.datetime.strftime('%Y-%m-%d %H:%M') 

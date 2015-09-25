@@ -64,16 +64,18 @@
 	{% if event.meetingnotes %}
 		<p><a href="{{ event.meetingnotes }}">Meeting notes</a></p>
 	{% endif %}
-	<table class="stripe topalign">
-		<tr><th>Date/time</th><th>Note</th></tr>
-		{% for note in notes %}
-			<tr class="{% cycle 'odd' 'even' %}">
-				<td><img src="/static/crm/{{ note.notetype.icon }}.png" alt="{{ note.notetype }}" align="absmiddle" />
-					{{ note.datetime|date:"d/m/Y H:i" }}</td>
-				<td>{{ note.note|linebreaksbr }}</td>
-			</tr>
-		{% endfor %}
-	</table>
+	{% if notes.count > 0 %}
+		<table class="stripe topalign">
+			<tr><th>Date/time</th><th>Note</th></tr>
+			{% for note in notes %}
+				<tr class="{% cycle 'odd' 'even' %}">
+					<td><img src="/static/crm/{{ note.notetype.icon }}.png" alt="{{ note.notetype }}" align="absmiddle" />
+						{{ note.datetime|date:"d/m/Y H:i" }}</td>
+					<td>{{ note.note|linebreaksbr }}</td>
+				</tr>
+			{% endfor %}
+		</table>
+	{% endif %}
 {% endif %}
 
 {% endblock %}

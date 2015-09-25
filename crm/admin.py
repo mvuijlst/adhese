@@ -35,7 +35,6 @@ class CompanyNoteInline(admin.StackedInline):
 			field.queryset = field.queryset.filter(company__name__exact = 'Adhese')  
 		return field
 	exclude=('person','event','project',)
-	readonly_fields=('datetime',)
 	extra=0
 	
 class EventNoteInline(admin.StackedInline):
@@ -83,6 +82,11 @@ class EventForm(autocomplete_light.ModelForm):
 		
 class EventAdmin(admin.ModelAdmin):
 	form=EventForm
+	def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
+		field = super(EventAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+		if db_field.name == 'project':
+			field.queryset = field.queryset.filter(active=True)  
+		return field
 	inlines=[EventNoteInline]
 	list_display = ('datetime', 'eventtype', 'project')
 	list_filter = ['project']

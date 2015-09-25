@@ -1,0 +1,22 @@
+{% extends 'crm/base.html' %}
+{% load thumbnail %}
+
+{% block title %}Trombinoscope{% endblock %}
+
+{% block main %}
+
+<h2>Trombinoscope</h2>
+
+<section id="photos">
+	{% for photo in photolist %}
+		{% thumbnail photo.photo "150" as im %}
+			<a href="{% url 'person' photo.id %}"><img src="{{ im.url }}" 
+				width="{{ im.width }}" 
+				height="{{ im.height }}"
+				title="{{ photo.firstname }} {{ photo.lastname }}"
+				alt="{{ photo.firstname }} {{ photo.lastname }}"></a>
+		{% endthumbnail %}
+	{% endfor %}
+</section>	
+	
+{% endblock %}

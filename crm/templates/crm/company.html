@@ -1,10 +1,20 @@
 {% extends 'crm/base.html' %}
 {% load humanize %}
+{% load thumbnail %}
 {% load app_filters %} 
 
 {% block title %}Company: {{ company.name }}{% endblock %}
 
 {% block main %}
+
+{% if company.logo %}
+	<a href="{{ company.logo.url }}" alt="{{ company.name }}">
+		{% thumbnail company.logo "300" as im %}
+			<img class="personphoto" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+		{% endthumbnail %}
+	</a>
+{% endif %}
+
 <h1>{{ company.name }}
 	<span class="edit">[<a href="/admin/crm/company/{{ company.id }}/">edit</a>]</span></h1>
 
@@ -36,9 +46,9 @@
 		<tr><th>Date/time</th><th>Note</th></tr>
 		{% for note in notes %}
 			<tr class="{% cycle 'odd' 'even' %}">
-				<td><img src="/static/crm/{{ note.notetype.icon }}.png" alt="{{ note.notetype }}" align="absmiddle" />
+				<td class="nobr"><img src="/static/crm/{{ note.notetype.icon }}.png" alt="{{ note.notetype }}" align="absmiddle" />
 					{{ note.datetime|date:"d/m/Y H:i" }}</td>
-				<td>{{ note.note|linebreaksbr }}</td>
+				<td>{{ note.note|safe|linebreaksbr }}</td>
 			</tr>
 		{% endfor %}
 	</table>

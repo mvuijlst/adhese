@@ -8,7 +8,7 @@
 <h2>Events</h2>
 
 <table>
-	<tr><th><h2>Upcoming</h2></th><th><h2>Recent</h2></th></tr>
+	<tr><th><h3>Upcoming</h3></th><th><h3>Recent</h3></th></tr>
 	<tr><td valign="top" style="padding-right: 1em">
 			{% if upcomingeventlist %}
 				<table class="stripe topalign select">
@@ -50,19 +50,32 @@
 	</tr>
 </table>
 
-{% if projectlist.count > 0 %}
-	<h2>Projects</h2>
+{% if todolist.count > 0 %}
+	<h2>To do</h2>
 	<table class="stripe topalign select">
-		<tr><th>Project</th></tr>
-		{% for project in projectlist %}
-			<tr class="{% cycle 'odd' 'even' %}">
-				<td><a href="{% url 'project' project.id %}">{{ project.name }}</a></td>
+		<tr><th>Action date</th><th>Subject</th><th>Note</th><th>Who</th></tr>
+		{% for todo in todolist %}
+			<tr class="{% cycle 'odd' 'even' %}"
+				{% if todo.person %}onclick="window.document.location='{% url 'person' todo.person.id %}';"{% endif %}
+				{% if todo.company %}onclick="window.document.location='{% url 'company' todo.company.id %}';"{% endif %}
+				{% if todo.event %}onclick="window.document.location='{% url 'event' todo.event.id %}';"{% endif %}
+				{% if todo.project %}onclick="window.document.location='{% url 'project' todo.project.id %}';"{% endif %}
+			>
+				<td>{% if todo.actiondate %}{{ todo.actiondate }}{% else %}--{% endif %}</td>
+				<td>{% if todo.person %}{{ todo.person }}{% endif %}
+					{% if todo.company %}{{ todo.company }}{% endif %}
+					{% if todo.event %}{{ todo.event }}{% endif %}
+					{% if todo.project %}{{ todo.project }}{% endif %}
+				</td>
+				<td>{{ todo.note }}</td>
+				<td>{% if todo.actionperson %}{{ todo.actionperson }}{% else %}--{% endif %}</td>
 			</tr>
 		{% endfor %}
 	</table>
 {% else %}
-	<p>No projects</p>
+	<p>No to do items.</p>
 {% endif %}
+
 
 {% endblock %}
 

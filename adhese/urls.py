@@ -21,7 +21,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^crm/', include('crm.urls')),
-    url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', lambda r: HttpResponseRedirect('crm/')),
 	url(r'^autocomplete/', include('autocomplete_light.urls')),

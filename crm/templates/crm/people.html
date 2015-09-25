@@ -6,7 +6,9 @@
 
 {% block main %}
 {% if personlist %}
-	<h2>People</h2>
+	<h2>People 
+		<span class="pop">[<a href="{% url 'trombinoscope' %}">trombinoscope</a>]</span>
+	</h2>
 	{% regroup personlist by initial as person_list %}
 	
 	<p>

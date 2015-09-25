@@ -14,12 +14,15 @@ def index(request):
 		datetime__gte=datetime.today()
 		).order_by('datetime')[:10]
 
-	projectlist = Project.objects.all().order_by('name')
+	projectlist = Project.objects.all().filter(active=True).order_by('name')
+	
+	todolist = Note.objects.all().filter(notetype__name__startswith='todo').order_by('actiondate')
 		
 	context = {
 		'recenteventlist': recenteventlist,
 		'upcomingeventlist': upcomingeventlist,
 		'projectlist': projectlist,
+		'todolist': todolist,
 	}
 	
 	return render(request, 'crm/index.html', context)
@@ -123,3 +126,11 @@ def people(request):
 	}
 	
 	return render(request, 'crm/people.html', context)
+
+def trombinoscope(request):
+	photolist=Person.objects.all().order_by('?')
+	
+	context = { 
+		'photolist': photolist 
+	}
+	return render(request, 'crm/trombinoscope.html', context)
