@@ -14,7 +14,9 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+DATA_DIR = os.getenv('CRM_DATA_DIR',BASE_DIR)
+MEDIA_ROOT = os.path.join(DATA_DIR,'media')
+STATIC_ROOT = os.path.join(DATA_DIR,'static')
 MEDIA_URL = '/media/'
 
 # Quick-start development settings - unsuitable for production
