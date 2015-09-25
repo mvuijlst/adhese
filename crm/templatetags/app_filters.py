@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import re 
 from django import template 
 from django.contrib.auth.models import Group 
