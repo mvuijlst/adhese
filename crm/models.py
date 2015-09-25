@@ -139,7 +139,7 @@ class Note(models.Model):
 	event=models.ForeignKey(Event, null=True, blank=True)
 	project=models.ForeignKey(Project, null=True, blank=True)
 	note=models.TextField()
-	notetype=models.ForeignKey(Notetype, null=True, blank=True)
+	notetype=models.ForeignKey(Notetype)
 	actiondate=models.DateField('Action by', null=True, blank=True)
 	actionperson=models.ForeignKey(Person, related_name='note_actionperson', null=True, blank=True)
 	
