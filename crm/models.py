@@ -32,7 +32,6 @@ class Location(models.Model):
 
 class Company(models.Model):
 	name=models.CharField(max_length=150)
-	parentcompany=models.ForeignKey('self',null=True,blank=True)
 	address=models.TextField(null=True,blank=True)
 	logo=models.ImageField(upload_to='logo',null=True,blank=True)
 	typename=models.ForeignKey(Companytype,null=True,blank=True)
