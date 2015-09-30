@@ -19,6 +19,8 @@ MEDIA_ROOT = os.path.join(DATA_DIR,'media')
 STATIC_ROOT = os.path.join(DATA_DIR,'static')
 MEDIA_URL = '/media/'
 
+THUMBNAIL_DEBUG = True
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -117,4 +119,6 @@ STATIC_URL = '/static/'
 SUIT_CONFIG = {
     # header
     'ADMIN_NAME': 'Adhese CRM: beheer',
+    #menu
+    'SEARCH_URL': '/admin/crm/person/',
 }

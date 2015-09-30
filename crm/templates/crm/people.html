@@ -17,17 +17,15 @@
 		{% endfor %}
 	</p>
 	
-	<dl>
+	<table>
 		{% for person in person_list %}
-			<dt><a id="{{ person.grouper }}" />{{ person.grouper }}</dt>
+			<tr><th colspan="2"><a id="{{ person.grouper }}" />{{ person.grouper }}</th></tr>
 			{% for p in person.list %}
-				<dd>
-					<a href="{% url 'person' p.id %}">{{ p.firstname }} {{ p.lastname }}</a>
-					{% if p.companyname %}({{ p.companyname }}){% endif %}
-				</dd>
+				<tr><td style="text-align: right"><a href="{% url 'person' p.id %}">{{ p.firstname }}</a>&nbsp;</td><td><a href="{% url 'person' p.id %}">{{ p.lastname }}</a> {% if p.companyname %}({{ p.companyname }}){% endif %}</td>
+				</tr>
 			{% endfor %}
 		{% endfor %}
-	</dl>
+	</table>
 {% else %}
 	<p>No people!</p>
 {% endif %}
